@@ -1,628 +1,627 @@
-# ESO-learning
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English ESO Learning: 100 Ejercicios Progresivos</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>English ESO Learning</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: #333;
+        }
+
+        #login-page {
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
 
-        #container {
-            width: 900px;
-            max-width: 95%;
-            background: #fff;
+        .login-container {
+            background: white;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        header {
-            background: #007bff;
-            color: #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            max-width: 90%;
+            padding: 40px;
             text-align: center;
-            padding: 20px;
         }
 
-        header h1 {
-            font-size: 32px;
+        .login-container h1 {
+            color: #1e3c72;
             margin-bottom: 10px;
+            font-size: 28px;
         }
 
-        nav {
-            display: flex;
-            justify-content: center;
-            background: #f8f9fa;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
+        .login-container p {
+            color: #666;
+            margin-bottom: 30px;
         }
 
-        nav a {
-            color: #007bff;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
-
-        nav a:hover {
-            background: #e9ecef;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        .lesson, .quiz, .progress {
-            margin-bottom: 40px;
-        }
-
-        h2 {
-            font-size: 26px;
-            color: #007bff;
-            margin-bottom: 15px;
-        }
-
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .quiz-question {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border: 1px solid #ddd;
-        }
-
-        .quiz-question label {
-            display: block;
-            margin: 10px 0;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .quiz-question input[type="radio"] {
-            margin-right: 10px;
-        }
-
-        button {
-            background: #28a745;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #218838;
-        }
-
-        #quiz-result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        #progress-chart {
-            max-width: 100%;
-            margin-top: 20px;
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .progress-table th, .progress-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
+        .input-group {
+            margin-bottom: 20px;
             text-align: left;
         }
 
-        .progress-table th {
-            background: #007bff;
-            color: #fff;
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #444;
         }
 
-        .social-share {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .social-share a {
-            color: #007bff;
-            text-decoration: none;
-            margin: 0 10px;
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
 
-        #login-section {
-            text-align: center;
-            padding: 40px;
+        .input-group input:focus {
+            border-color: #2a5298;
+            outline: none;
         }
 
-        #logout-button {
-            background: #dc3545;
-            margin-top: 20px;
-        }
-
-        #logout-button:hover {
-            background: #c82333;
-        }
-
-        #exercise-list {
-            display: none;
-        }
-
-        .exercise-item {
-            background: #f8f9fa;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
+        .login-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            width: 100%;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
         }
 
-        .exercise-item:hover {
-            background: #e9ecef;
-        }
-
-        #current-exercise {
-            display: none;
+        .login-btn:hover {
+            background: #2a5298;
         }
 
         .login-options {
-            margin-top: 20px;
+            margin-top: 25px;
             display: flex;
             flex-direction: column;
+            gap: 12px;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
             gap: 15px;
+        }
+
+        .social-btn {
+            padding: 12px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            background: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #main-app {
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+        }
+
+        .app-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .login-btn {
-            background: #4285F4;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
+        .app-header h1 {
+            color: #1e3c72;
+            font-size: 24px;
+        }
+
+        .user-info {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .login-btn:hover {
-            background: #357ae8;
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #1e3c72;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 24px;
-            }
+        .logout-btn {
+            background: #f0f4f8;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #666;
+            transition: background 0.3s;
+        }
 
-            nav {
+        .logout-btn:hover {
+            background: #e0e7f1;
+        }
+
+        .app-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #2a5298;
+            color: white;
+            padding: 30px 0;
+        }
+
+        .nav-item {
+            padding: 15px 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover {
+            background: #3a63b0;
+        }
+
+        .nav-item.active {
+            background: #1e3c72;
+            border-left: 4px solid white;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: #f0f4f8;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .section p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .exercise-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .exercise-card h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .exercise-card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .start-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .start-btn:hover {
+            background: #2a5298;
+        }
+
+        .progress-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e7f1;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #1e3c72;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+
+        .resource-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .resource-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s;
+        }
+
+        .resource-item:hover {
+            transform: translateX(5px);
+        }
+
+        .resource-icon {
+            width: 40px;
+            height: 40px;
+            background: #1e3c72;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .app-content {
                 flex-direction: column;
-                gap: 10px;
             }
-
-            nav a {
-                padding: 8px;
-                font-size: 16px;
+            
+            .sidebar {
+                width: 100%;
+                padding: 15px 0;
             }
-
-            .content {
-                padding: 20px;
+            
+            .nav-item {
+                padding: 12px 20px;
+            }
+            
+            .exercise-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div id="container">
-        <header>
-            <h1>English ESO Learning: 100 Ejercicios Progresivos</h1>
-            <p>Ejercicios para estudiantes de ESO (A2-B1)</p>
-        </header>
-        <nav>
-            <a href="#lessons">Lecciones</a>
-            <a href="#exercises">Ejercicios</a>
-            <a href="#progress">Progreso</a>
-            <a href="#resources">Recursos</a>
-        </nav>
-        <div class="content">
-            <section id="login-section">
-                <h2>Inicia Sesión</h2>
-                <p>Accede para guardar tu progreso en los 100 ejercicios de inglés</p>
-                <div class="login-options">
-                    <button class="login-btn" onclick="simulateLogin('student@example.com')">
-                        <span>Iniciar sesión como Estudiante</span>
-                    </button>
-                    <button class="login-btn" onclick="simulateLogin('teacher@example.com')">
-                        <span>Iniciar sesión como Profesor</span>
-                    </button>
+    <!-- Página de inicio de sesión -->
+    <div id="login-page">
+        <div class="login-container">
+            <h1>English ESO Learning</h1>
+            <p>Inicia sesión para acceder a los recursos de aprendizaje</p>
+            
+            <div class="input-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" placeholder="tu@email.com">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" placeholder="Tu contraseña">
+            </div>
+            
+            <button class="login-btn" onclick="login()">Iniciar Sesión</button>
+            
+            <div class="login-options">
+                <p>o inicia sesión con</p>
+                <div class="social-login">
+                    <div class="social-btn">G</div>
+                    <div class="social-btn">F</div>
+                    <div class="social-btn">M</div>
                 </div>
-            </section>
-            <section id="lessons" class="lesson" style="display: none;">
-                <h2>Lecciones de Inglés para ESO</h2>
-                <p>Accede a 100 ejercicios progresivos, desde nivel A2 hasta B1, diseñados para el currículo de ESO.</p>
-                <p>Los ejercicios cubren gramática, vocabulario y comprensión, empezando con temas básicos como Present Simple y avanzando hacia estructuras más complejas como condicionales.</p>
-                
-                <div class="quiz-question">
-                    <h3>Ejemplo de ejercicio de gramática</h3>
-                    <p>Complete: I ___ to school every day.</p>
-                    <label><input type="radio" name="quiz1" value="a"> go</label>
-                    <label><input type="radio" name="quiz1" value="b"> goes</label>
-                    <label><input type="radio" name="quiz1" value="c"> going</label>
-                </div>
-                
-                <button onclick="checkAnswer('quiz1', 'a')">Comprobar respuesta</button>
-                <div id="quiz-result"></div>
-            </section>
-            <section id="exercises" style="display: none;">
-                <h2>Ejercicios Progresivos</h2>
-                <div id="exercise-list"></div>
-                <div id="current-exercise">
-                    <h3 id="exercise-title"></h3>
-                    <p id="exercise-question"></p>
-                    <div id="exercise-options"></div>
-                    <button onclick="finalizeExercise()">Finalizar Ejercicio</button>
-                    <div id="exercise-result"></div>
-                </div>
-            </section>
-            <section id="progress" class="progress" style="display: none;">
-                <h2>Tu Progreso</h2>
-                <p>Consulta tu progreso en los 100 ejercicios.</p>
-                <canvas id="progress-chart" width="600" height="300"></canvas>
-                <table class="progress-table">
-                    <tr>
-                        <th>Ejercicio</th>
-                        <th>Estado</th>
-                        <th>Puntuación</th>
-                    </tr>
-                    <!-- Filas generadas dinámicamente -->
-                </table>
-            </section>
-            <section id="resources" class="resources" style="display: none;">
-                <h2>Recursos Adicionales</h2>
-                <p>Explora más herramientas para mejorar tu inglés:</p>
-                <ul>
-                    <li><a href="https://www.bbc.co.uk/learningenglish/" target="_blank">BBC Learning English</a></li>
-                    <li><a href="https://www.duolingo.com/" target="_blank">Duolingo</a></li>
-                    <li><a href="https://www.cambridgeenglish.org/" target="_blank">Cambridge English</a></li>
-                </ul>
-            </section>
-            <button id="logout-button" onclick="logout()" style="display: none;">Cerrar Sesión</button>
-            <div class="social-share">
-                <p>¡Comparte esta página!</p>
-                <a href="https://x.com/share?url=https://english-eso-learning.com&text=¡Aprende inglés para ESO con 100 ejercicios progresivos!" target="_blank">Compartir en X</a>
             </div>
         </div>
     </div>
 
-    <script>
-        // Generar 100 ejercicios progresivos
-        const exercises = Array.from({length: 100}, (_, i) => {
-            const level = Math.floor(i / 20); // Divide en 5 niveles de dificultad
-            const topics = [
-                // Nivel 1 (1-20): Present Simple (A2, fácil)
-                () => ({
-                    title: `Ejercicio ${i+1}: Present Simple`,
-                    question: `Complete: I ___ to school every day.`,
-                    options: ['go', 'goes', 'going'],
-                    correct: 0
-                }),
-                // Nivel 2 (21-40): Present Continuous (A2, medio)
-                () => ({
-                    title: `Ejercicio ${i+1}: Present Continuous`,
-                    question: `Complete: They ___ football now.`,
-                    options: ['play', 'are playing', 'plays'],
-                    correct: 1
-                }),
-                // Nivel 3 (41-60): Past Simple (A2-B1, medio)
-                () => ({
-                    title: `Ejercicio ${i+1}: Past Simple`,
-                    question: `Complete: She ___ to the park yesterday.`,
-                    options: ['go', 'went', 'gone'],
-                    correct: 1
-                }),
-                // Nivel 4 (61-80): Future Tenses (B1, medio-avanzado)
-                () => ({
-                    title: `Ejercicio ${i+1}: Future Tense`,
-                    question: `Complete: We ___ to London next week.`,
-                    options: ['will go', 'go', 'going'],
-                    correct: 0
-                }),
-                // Nivel 5 (81-100): Second Conditional (B1, avanzado)
-                () => ({
-                    title: `Ejercicio ${i+1}: Second Conditional`,
-                    question: `Complete: If I ___ rich, I ___ travel the world.`,
-                    options: ['am / will', 'were / would', 'was / will'],
-                    correct: 1
-                })
-            ];
-            return topics[Math.min(level, topics.length - 1)]();
-        });
-
-        let userEmail = null;
-        let progress = Array(100).fill(false); // true si completado correctamente
-        let scores = Array(100).fill(0); // Puntuación por ejercicio
-        let currentExerciseIndex = -1;
-
-        // Simular inicio de sesión (en lugar de Google OAuth)
-        function simulateLogin(email) {
-            userEmail = email;
-            document.getElementById('login-section').style.display = 'none';
-            document.querySelectorAll('.content section').forEach(sec => sec.style.display = 'block');
-            document.getElementById('logout-button').style.display = 'block';
-            loadProgress();
-            loadExerciseList();
-        }
-
-        // Cerrar sesión
-        function logout() {
-            userEmail = null;
-            document.getElementById('login-section').style.display = 'block';
-            document.querySelectorAll('.content section').forEach(sec => sec.style.display = 'none');
-            document.getElementById('logout-button').style.display = 'none';
-            document.getElementById('current-exercise').style.display = 'none';
-            document.getElementById('exercise-list').innerHTML = '';
-        }
-
-        // Cargar progreso de localStorage
-        function loadProgress() {
-            const savedProgress = localStorage.getItem(`progress_${userEmail}`);
-            const savedScores = localStorage.getItem(`scores_${userEmail}`);
+    <!-- Aplicación principal (oculta inicialmente) -->
+    <div id="main-app">
+        <header class="app-header">
+            <h1>English ESO Learning</h1>
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <span id="username">Usuario</span>
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </header>
+        
+        <div class="app-content">
+            <nav class="sidebar">
+                <div class="nav-item active" data-section="lessons">
+                    <span>📚</span> Lecciones
+                </div>
+                <div class="nav-item" data-section="exercises">
+                    <span>✏️</span> Ejercicios
+                </div>
+                <div class="nav-item" data-section="progress">
+                    <span="📊</span> Progreso
+                </div>
+                <div class="nav-item" data-section="resources">
+                    <span>🔗</span> Recursos
+                </div>
+            </nav>
             
-            if (savedProgress) {
-                progress = JSON.parse(savedProgress);
-            }
-            if (savedScores) {
-                scores = JSON.parse(savedScores);
-            }
-            
-            updateProgressChart();
-            updateProgressTable();
-        }
-
-        // Guardar progreso
-        function saveProgress() {
-            localStorage.setItem(`progress_${userEmail}`, JSON.stringify(progress));
-            localStorage.setItem(`scores_${userEmail}`, JSON.stringify(scores));
-        }
-
-        // Cargar lista de ejercicios
-        function loadExerciseList() {
-            const list = document.getElementById('exercise-list');
-            list.style.display = 'block';
-            list.innerHTML = '<h3>Selecciona un ejercicio:</h3>';
-            
-            exercises.forEach((ex, index) => {
-                const item = document.createElement('div');
-                item.className = 'exercise-item';
-                item.innerHTML = `
-                    <strong>${ex.title}</strong> 
-                    <span>${progress[index] ? '✅ Completado' : '❌ Pendiente'}</span>
-                    ${scores[index] ? `<span>Puntuación: ${scores[index]}/100</span>` : ''}
-                `;
-                item.onclick = () => loadExercise(index);
-                list.appendChild(item);
-            });
-        }
-
-        // Cargar ejercicio actual
-        function loadExercise(index) {
-            currentExerciseIndex = index;
-            const ex = exercises[index];
-            
-            document.getElementById('exercise-title').textContent = ex.title;
-            document.getElementById('exercise-question').textContent = ex.question;
-            
-            const optionsDiv = document.getElementById('exercise-options');
-            optionsDiv.innerHTML = '';
-            
-            ex.options.forEach((opt, optIndex) => {
-                const label = document.createElement('label');
-                const radio = document.createElement('input');
-                radio.type = 'radio';
-                radio.name = 'exercise-option';
-                radio.value = optIndex;
-                label.appendChild(radio);
-                label.appendChild(document.createTextNode(opt));
-                optionsDiv.appendChild(label);
-                optionsDiv.appendChild(document.createElement('br'));
-            });
-            
-            document.getElementById('exercise-result').textContent = '';
-            document.getElementById('current-exercise').style.display = 'block';
-            
-            // Scroll to exercise
-            document.getElementById('current-exercise').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Finalizar ejercicio
-        function finalizeExercise() {
-            const selected = document.querySelector('input[name="exercise-option"]:checked');
-            if (!selected) {
-                alert('Por favor, selecciona una opción');
-                return;
-            }
-            
-            const selectedIndex = parseInt(selected.value);
-            const ex = exercises[currentExerciseIndex];
-            const isCorrect = selectedIndex === ex.correct;
-            
-            document.getElementById('exercise-result').textContent = isCorrect ? 
-                '¡Correcto! +100 puntos' : `Incorrecto. La respuesta correcta es: ${ex.options[ex.correct]}`;
-            
-            document.getElementById('exercise-result').style.color = isCorrect ? '#28a745' : '#dc3545';
-            
-            if (isCorrect) {
-                progress[currentExerciseIndex] = true;
-                scores[currentExerciseIndex] = 100;
-                saveProgress();
+            <main class="content-area">
+                <!-- Sección de Lecciones -->
+                <section id="lessons" class="section active">
+                    <h2>Lecciones de Inglés</h2>
+                    <p>Explora nuestras lecciones organizadas por nivel de dificultad y temas gramaticales.</p>
+                    
+                    <div class="exercise-grid">
+                        <div class="exercise-card">
+                            <h3>Present Simple</h3>
+                            <p>Aprende a usar el presente simple en contextos cotidianos.</p>
+                            <button class="start-btn">Comenzar Lección</button>
+                        </div>
+                        
+                        <div class="exercise-card">
+                            <h3>Past Continuous</h3>
+                            <p>Domina el uso del pasado continuo con ejemplos prácticos.</p>
+                            <button class="start-btn">Comenzar Lección</button>
+                        </div>
+                        
+                        <div class="exercise-card">
+                            <h3>Future Tenses</h3>
+                            <p>Aprende a diferenciar entre will, going to y present continuous.</p>
+                            <button class="start-btn">Comenzar Lección</button>
+                        </div>
+                        
+                        <div class="exercise-card">
+                            <h3>Conditionals</h3>
+                            <p>Domina los condicionales de tipo 0, 1, 2 y 3.</p>
+                            <button class="start-btn">Comenzar Lección</button>
+                        </div>
+                    </div>
+                </section>
                 
-                // Actualizar la lista de ejercicios
-                loadExerciseList();
-                updateProgressChart();
-                updateProgressTable();
-            }
-        }
+                <!-- Sección de Ejercicios -->
+                <section id="exercises" class="section">
+                    <h2>Ejercicios de Práctica</h2>
+                    <p>Practica lo aprendido con nuestros ejercicios interactivos.</p>
+                    
+                    <div class="exercise-grid">
+                        <div class="exercise-card">
+                            <h3>Present Simple Exercise</h3>
+                            <p>Completa las oraciones con la forma correcta del verbo.</p>
+                            <button class="start-btn">Comenzar Ejercicio</button>
+                        </div>
+                        
+                        <div class="exercise-card">
+                            <h3>Vocabulary Quiz</h3>
+                            <p>Pon a prueba tu vocabulario con este cuestionario.</p>
+                            <button class="start-btn">Comenzar Ejercicio</button>
+                        </div>
+                        
+                        <div class="exercise-card">
+                            <h3>Listening Comprehension</h3>
+                            <p>Escucha el audio y responde a las preguntas.</p>
+                            <button class="start-btn">Comenzar Ejercicio</button>
+                        </div>
+                        
+                        <div class="exercise-card">
+                            <h3>Reading Exercise</h3>
+                            <p>Lee el texto y responde a las preguntas de comprensión.</p>
+                            <button class="start-btn">Comenzar Ejercicio</button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Sección de Progreso -->
+                <section id="progress" class="section">
+                    <h2>Tu Progreso</h2>
+                    <p>Revisa tu avance en el aprendizaje del inglés.</p>
+                    
+                    <div class="progress-container">
+                        <h3>Progreso General</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="overall-progress"></div>
+                        </div>
+                        <p>Has completado el <span id="progress-percent">0</span>% del curso</p>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <h3>Lecciones Completadas</h3>
+                        <p>✅ Present Simple - Completado</p>
+                        <p>✅ Vocabulary Basics - Completado</p>
+                        <p>🔄 Past Continuous - En progreso</p>
+                        <p>❌ Future Tenses - No iniciado</p>
+                    </div>
+                </section>
+                
+                <!-- Sección de Recursos -->
+                <section id="resources" class="section">
+                    <h2>Recursos Adicionales</h2>
+                    <p>Enlaces y materiales adicionales para complementar tu aprendizaje.</p>
+                    
+                    <div class="resource-list">
+                        <div class="resource-item">
+                            <div class="resource-icon">📖</div>
+                            <div>
+                                <h3>Gramática Avanzada</h3>
+                                <p>Guía completa de gramática inglesa</p>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">🎧</div>
+                            <div>
+                                <h3>Podcasts en Inglés</h3>
+                                <p>Mejora tu listening con estos podcasts</p>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">📺</div>
+                            <div>
+                                <h3>Canales de YouTube</h3>
+                                <p>Canales recomendados para aprender inglés</p>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item">
+                            <div class="resource-icon">📝</div>
+                            <div>
+                                <h3>Plantillas de Ejercicios</h3>
+                                <p>Descarga ejercicios adicionales en PDF</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
 
-        // Comprobar respuesta de ejemplo
-        function checkAnswer(quizName, correctValue) {
-            const selected = document.querySelector(`input[name="${quizName}"]:checked`);
-            const resultDiv = document.getElementById('quiz-result');
+    <script>
+        // Función para iniciar sesión
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             
-            if (!selected) {
-                resultDiv.textContent = 'Por favor, selecciona una respuesta';
-                resultDiv.style.color = '#dc3545';
+            if (!email || !password) {
+                alert('Por favor, completa todos los campos');
                 return;
             }
             
-            if (selected.value === correctValue) {
-                resultDiv.textContent = '¡Correcto!';
-                resultDiv.style.color = '#28a745';
-            } else {
-                resultDiv.textContent = 'Incorrecto. Intenta de nuevo.';
-                resultDiv.style.color = '#dc3545';
-            }
+            // Simular inicio de sesión exitoso
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-app').style.display = 'flex';
+            document.getElementById('username').textContent = email.split('@')[0];
+            
+            // Simular progreso
+            simulateProgress();
         }
-
-        // Inicializar gráfico de Chart.js
-        let progressChart;
-        function initProgressChart() {
-            const chartCtx = document.getElementById('progress-chart').getContext('2d');
-            progressChart = new Chart(chartCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Nivel 1', 'Nivel 2', 'Nivel 3', 'Nivel 4', 'Nivel 5'],
-                    datasets: [{
-                        label: 'Puntuación media',
-                        data: [0, 0, 0, 0, 0],
-                        backgroundColor: '#007bff'
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: { 
-                            beginAtZero: true, 
-                            max: 100,
-                            title: {
-                                display: true,
-                                text: 'Puntuación'
-                            }
-                        },
-                        x: { 
-                            title: {
-                                display: true,
-                                text: 'Niveles de dificultad'
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: { 
-                            display: true, 
-                            text: 'Progreso por Niveles' 
-                        }
-                    }
+        
+        // Función para cerrar sesión
+        function logout() {
+            document.getElementById('main-app').style.display = 'none';
+            document.getElementById('login-page').style.display = 'flex';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+        
+        // Navegación entre secciones
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remover clase active de todos los items
+                document.querySelectorAll('.nav-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Añadir clase active al item clickeado
+                this.classList.add('active');
+                
+                // Ocultar todas las secciones
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Mostrar la sección correspondiente
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // Simular barra de progreso
+        function simulateProgress() {
+            const progressBar = document.getElementById('overall-progress');
+            const progressPercent = document.getElementById('progress-percent');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 5;
+                if (progress >= 65) {
+                    progress = 65;
+                    clearInterval(interval);
                 }
+                
+                progressBar.style.width = progress + '%';
+                progressPercent.textContent = Math.round(progress);
+            }, 100);
+        }
+        
+        // Botones de comenzar lección/ejercicio
+        document.querySelectorAll('.start-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('¡Función de ejercicio activada! En una aplicación real, esto abriría el ejercicio seleccionado.');
             });
-        }
-
-        // Actualizar gráfico
-        function updateProgressChart() {
-            if (!progressChart) initProgressChart();
-            
-            // Calcular puntuación media por nivel (20 ejercicios por nivel)
-            const levelScores = [0, 0, 0, 0, 0];
-            const levelCounts = [0, 0, 0, 0, 0];
-            
-            scores.forEach((score, index) => {
-                const level = Math.floor(index / 20);
-                levelScores[level] += score;
-                levelCounts[level]++;
-            });
-            
-            const averages = levelScores.map((total, i) => 
-                levelCounts[i] > 0 ? Math.round(total / levelCounts[i]) : 0
-            );
-            
-            progressChart.data.datasets[0].data = averages;
-            progressChart.update();
-        }
-
-        // Actualizar tabla de progreso
-        function updateProgressTable() {
-            const table = document.querySelector('.progress-table');
-            // Mantener la fila de encabezado
-            const headerRow = table.querySelector('tr');
-            table.innerHTML = '';
-            table.appendChild(headerRow);
-            
-            // Añadir solo 10 filas para no hacer la tabla demasiado larga
-            for (let i = 0; i < 10; i++) {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>Ejercicio ${i+1}</td>
-                    <td>${progress[i] ? 'Completado' : 'Pendiente'}</td>
-                    <td>${scores[i]}/100</td>
-                `;
-                table.appendChild(row);
-            }
-            
-            // Añadir fila de resumen
-            const completed = progress.filter(p => p).length;
-            const totalScore = scores.reduce((sum, score) => sum + score, 0);
-            const averageScore = completed > 0 ? Math.round(totalScore / completed) : 0;
-            
-            const summaryRow = document.createElement('tr');
-            summaryRow.style.fontWeight = 'bold';
-            summaryRow.innerHTML = `
-                <td>Resumen</td>
-                <td>${completed}/100 completados</td>
-                <td>${averageScore} puntuación media</td>
-            `;
-            table.appendChild(summaryRow);
-        }
-
-        // Inicializar la página
-        function init() {
-            initProgressChart();
-            updateProgressTable();
-        }
-
-        // Ejecutar inicialización cuando se carga la página
-        window.onload = init;
+        });
     </script>
 </body>
 </html>
